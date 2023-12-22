@@ -1,0 +1,109 @@
+<form [formGroup]="personForm" (ngSubmit)="OnSubmit()">
+    <div class="row justify-content-center mt-5 mb-3">
+        <div class="col-4">
+            <div class="form-group">
+                <label>First Name: </label>
+                <input class="form-control" type="text" formControlName="firstName">
+                <small class="text-danger" *ngIf="personForm.get('firstName')?.invalid && personForm.get('firstName')?.touched">
+                    First name is required!
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+        <div class="col-4">
+            <div class="form-group">
+                <label>Middle Name: </label>
+                <input class="form-control" type="text" formControlName="middleName">
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+        <div class="col-4">
+            <div class="form-group">
+                <label>Last Name: </label>
+                <input class="form-control" type="text" formControlName="lastName">
+                <small class="text-danger" *ngIf="personForm.get('lastName')?.invalid && personForm.get('lastName')?.touched">
+                    Last name is required!
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+        <div class="col-4">
+            <div class="form-group">
+                <label>Maiden Name: </label>
+                <input class="form-control" type="text" formControlName="maidenName">
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+        <div class="col-4">
+            <div class="form-check form-switch">
+                <label class="form-check-label">Date of Birth Unknown</label>
+                <input class="form-check-input" type="checkbox" formControlName="dobNotKnown">
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+        <div class="col-4">
+            <div *ngIf="personForm.get('dobNotKnown')?.value; else noDateOfBirth">
+                <div class="form-group">
+                    <label>Year of Birth: </label>
+                    <input class="form-control" type="number" formControlName="yearOfBirth">
+                </div>
+            </div>
+            <ng-template #noDateOfBirth>
+                <div class="form-group">
+                    <label>Date of Birth: </label>
+                    <input class="form-control" type="date" formControlName="dateOfBirth">
+                </div>
+            </ng-template>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+        <div class="col-4">
+            <div class="form-check form-switch">
+                <label class="form-check-label">This person is still alive</label>
+                <input class="form-check-input" type="checkbox" formControlName="alive">
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-3" *ngIf="!personForm.get('alive')?.value">
+        <div class="col-4">
+            <div class="form-check form-switch">
+                <label class="form-check-label">Date of Death Unknown</label>
+                <input class="form-check-input" type="checkbox" formControlName="dodNotKnown">
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-3" *ngIf="!personForm.get('alive')?.value">
+        <div class="col-4">
+            <div *ngIf="personForm.get('dodNotKnown')?.value; else noDateOfDeath">
+                <div class="form-group">
+                    <label>Year of Death: </label>
+                    <input class="form-control" type="number" formControlName="yearOfDeath">
+                </div>
+            </div>
+            <ng-template #noDateOfDeath>
+                <div class="form-group">
+                    <label>Date of Death: </label>
+                    <input class="form-control" type="date" formControlName="dateOfDeath">
+                </div>
+            </ng-template>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+        <div class="col-4">
+            <div class="form-group">
+                <label>Notes: </label>
+                <textarea class="form-control" rows="6" formControlName="notes"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-4 text-end">
+            <button class="btn btn-primary" type="submit" [disabled]="personForm.invalid">Submit</button>
+        </div>
+    </div>
+</form>
