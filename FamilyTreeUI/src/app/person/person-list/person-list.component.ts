@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PersonService } from '../person.service';
 import { Person } from 'app/models/person';
 import { Router } from '@angular/router';
+import { PersonSimplifiedDTO } from 'app/models/personSimplifiedDTO';
 
 @Component({
   selector: 'app-person-list',
@@ -11,30 +12,38 @@ import { Router } from '@angular/router';
 export class PersonListComponent implements OnInit {
 
 
-  people: Person[] = [];
+  people: PersonSimplifiedDTO[] = [];
 
   constructor(
     private personService: PersonService,
     private router: Router
-    ) { }
-
-  ngOnInit(): void {
-    this.personService.getPeople().subscribe(p => {
-      this.people = p;
-    });
-  }
-
-  DeletePerson(person: Person){
-    this.people = this.people.filter(x => x.personID != person.personID);
-    this.personService.deletePerson(person.personID).subscribe(() => {
+    ) { 
       this.personService.getPeople().subscribe(p => {
         this.people = p;
       });
-    });
+    }
+
+  ngOnInit(): void {
+    
   }
 
-  EditPerson(person: Person){
-    this.router.navigate([`/person/edit/${person.personID}`]);
+  DeletePerson(personID: string){
+    this.people = this.people.filter(x => x.personID != personID);
+    this.personService.deletePerson(personID).subscribe(() =>
+      {
+        this.personService.getPeople().subscribe(p => {
+          this.people = p;
+        });
+      }
+    );
+  }
+
+  EditPerson(personID: string){
+    this.router.navigate([`/person/edit/${personID}`]);
+  }
+
+  ViewPerson(personID: string) {
+    this.router.navigate([`/person/${personID}`]);
   }
 
 }

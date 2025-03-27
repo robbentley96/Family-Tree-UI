@@ -4,7 +4,8 @@
             <div class="form-group">
                 <label>First Name: </label>
                 <input class="form-control" type="text" formControlName="firstName">
-                <small class="text-danger" *ngIf="personForm.get('firstName')?.invalid && personForm.get('firstName')?.touched">
+                <small class="text-danger"
+                    *ngIf="personForm.get('firstName')?.invalid && personForm.get('firstName')?.touched">
                     First name is required!
                 </small>
             </div>
@@ -23,7 +24,8 @@
             <div class="form-group">
                 <label>Last Name: </label>
                 <input class="form-control" type="text" formControlName="lastName">
-                <small class="text-danger" *ngIf="personForm.get('lastName')?.invalid && personForm.get('lastName')?.touched">
+                <small class="text-danger"
+                    *ngIf="personForm.get('lastName')?.invalid && personForm.get('lastName')?.touched">
                     Last name is required!
                 </small>
             </div>
@@ -35,6 +37,24 @@
                 <label>Maiden Name: </label>
                 <input class="form-control" type="text" formControlName="maidenName">
             </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+        <div class="col-4">
+            <select class="form-select form-select-lg mb-3" formControlName="parent1ID">
+                <option selected>Parent 1</option>
+                <option *ngFor="let person of people" [value]="person.personID">{{person.name}} ({{person.dates}})
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+        <div class="col-4">
+            <select class="form-select form-select-lg mb-3" formControlName="parent2ID">
+                <option selected>Parent 2</option>
+                <option *ngFor="let person of people" [value]="person.personID">{{person.name}} ({{person.dates}})
+                </option>
+            </select>
         </div>
     </div>
     <div class="row justify-content-center mb-3">
@@ -65,11 +85,11 @@
         <div class="col-4">
             <div class="form-check form-switch">
                 <label class="form-check-label">This person is still alive</label>
-                <input class="form-check-input" type="checkbox" formControlName="alive">
+                <input class="form-check-input" type="checkbox" formControlName="isAlive">
             </div>
         </div>
     </div>
-    <div class="row justify-content-center mb-3" *ngIf="!personForm.get('alive')?.value">
+    <div class="row justify-content-center mb-3" *ngIf="!personForm.get('isAlive')?.value">
         <div class="col-4">
             <div class="form-check form-switch">
                 <label class="form-check-label">Date of Death Unknown</label>
@@ -77,7 +97,7 @@
             </div>
         </div>
     </div>
-    <div class="row justify-content-center mb-3" *ngIf="!personForm.get('alive')?.value">
+    <div class="row justify-content-center mb-3" *ngIf="!personForm.get('isAlive')?.value">
         <div class="col-4">
             <div *ngIf="personForm.get('dodNotKnown')?.value; else noDateOfDeath">
                 <div class="form-group">
@@ -101,6 +121,52 @@
             </div>
         </div>
     </div>
+    <div formArrayName="marriageList">
+        <div *ngFor="let listOfItemsCtrl of controls; let i = index" [formGroupName]="i">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <select class="form-select form-select-lg mb-3" formControlName="personID">
+                            <option selected>Partner</option>
+                            <option *ngFor="let person of people" [value]="person.personID">{{person.name}} ({{person.dates}})
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row justify-content-center mb-3">
+                    <div class="col-4">
+                        <div class="form-check form-switch">
+                            <label class="form-check-label">Start Date Unknown</label>
+                            <input class="form-check-input" type="checkbox" formControlName="startDateNotKnown">
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center mb-3">
+                    <div class="col-4">
+                        <div *ngIf="listOfItemsCtrl.get('startDateNotKnown')?.value; else noStartDate">
+                            <div class="form-group">
+                                <input type="number" class="form-control" id="startYear" placeholder="Enter Year"
+                                    name="startYear" formControlName="startYear" />
+                            </div>
+                        </div>
+                        <ng-template #noStartDate>
+                            <div class="form-group">
+                                <input type="date" class="form-control" id="startDate" placeholder="Enter Date"
+                                    name="startDate" formControlName="startDate" />
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-danger" type="button" (click)="onDelete_marriageList(i)">
+                Delete Marriage
+            </button>
+        </div>
+        <button class="btn btn-info" (click)="onAdd_marriageList()" type="button">
+            Add Marriage
+        </button>
+    </div>
+
     <div class="row justify-content-center">
         <div class="col-4 text-end">
             <button class="btn btn-primary" type="submit" [disabled]="personForm.invalid">Submit</button>

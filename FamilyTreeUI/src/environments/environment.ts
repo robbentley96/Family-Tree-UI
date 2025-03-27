@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: "http://localhost:7071/api",
+  //apiUrl: "https://bentley-family-tree.azurewebsites.net/api",
+  apiCode: "X"
 };
 
 /*

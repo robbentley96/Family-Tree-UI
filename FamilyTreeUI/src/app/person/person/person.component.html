@@ -1,1 +1,47 @@
-<p>person works!</p>
+<h1><span *ngIf="person.firstName">{{person.firstName}}</span>
+    <span *ngIf="person.middleName"> {{person.middleName}}</span>
+    <span *ngIf="person.lastName"> {{person.lastName}}</span>
+    <span *ngIf="person.maidenName"> ({{person.maidenName}})</span></h1>
+<h3>Information</h3>
+<ul>
+    <li>Born: <strong>{{person.dateOfBirth ? person.dateOfBirth : person.yearOfBirth ? person.yearOfBirth : "????"}}</strong></li>
+    <li *ngIf="!person.isAlive">Died: <strong>{{person.dateOfDeath ? person.dateOfDeath : person.yearOfDeath ? person.yearOfDeath : "????"}}</strong></li>
+    <li>Notes: {{person.notes}}</li>
+</ul>
+<h3>Parents</h3>
+<span *ngIf="person.parents != undefined && person.parents.length > 0">
+    <a href="person/{{person.parents[0].personID}}">{{ person.parents[0].name}}</a>
+</span>
+<span *ngIf="person.parents != undefined && person.parents.length > 1">
+     & <a href="person/{{person.parents[1].personID}}">{{ person.parents[1].name}}</a>
+</span>
+<span *ngIf="person.parents == undefined || person.parents.length == 0">
+    Parents unknown
+</span>
+<h3>Siblings</h3>
+<span *ngIf="person.siblings == undefined || person.siblings.length == 0">
+    No known siblings
+</span>
+<ul *ngIf="person.siblings != undefined && person.siblings.length > 0">
+    <li *ngFor="let sibling of person.siblings">
+        <a href="person/{{sibling.personID}}">{{ sibling.name}}</a>
+    </li>
+</ul>
+<h3>Children</h3>
+<span *ngIf="person.children == undefined || person.children.length == 0">
+    No known children
+</span>
+<ul *ngIf="person.children != undefined && person.children.length > 0">
+    <li *ngFor="let child of person.children">
+        <a href="person/{{child.personID}}">{{ child.name}}</a>
+    </li>
+</ul>
+<h3>Spouses</h3>
+<span *ngIf="person.spouses == undefined || person.spouses.length == 0">
+    No known marriages
+</span>
+<ul *ngIf="person.spouses != undefined && person.spouses.length > 0">
+    <li *ngFor="let spouse of person.spouses">
+        <a href="person/{{spouse.personID}}">{{ spouse.name}}</a> - married: {{spouse.marriageDate ?? spouse.marriageYear}}
+    </li>
+</ul>

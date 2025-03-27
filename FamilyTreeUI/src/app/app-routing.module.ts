@@ -5,8 +5,7 @@ import { PersonListComponent } from './person/person-list/person-list.component'
 import { PersonFormComponent } from './person/person-form/person-form.component';
 
 const routes: Routes = [
-  { path:  '', redirectTo: '/person', pathMatch: 'full'},
-  { path:  'person', component:  PersonListComponent},
+  { path:  '', component:  PersonListComponent},
   { path:  'person/new', component:  PersonFormComponent},
   { path:  'person/edit/:id', component:  PersonFormComponent},
   { path:  'person/:id', component:  PersonComponent}

@@ -2,10 +2,10 @@
     <div class="ml-auto p-2" *ngFor="let person of people">
         <div class="card" style="width: 18rem;">
             <div class="card-body">
-                <h5 class="card-title">{{person.firstName}} {{person.lastName}}</h5>
-                <h6 class="card-subtitle mb-2 text-muted"><span *ngIf="!person.yearOfBirth">????</span>{{person.yearOfBirth}} - <span *ngIf="!person.yearOfDeath">????</span>{{person.yearOfDeath}}</h6>
-                <button type="button" class="btn btn-secondary m-2" (click)="EditPerson(person)">Update</button>
-                <button type="button" class="btn btn-danger m-2" (click)="DeletePerson(person)">Delete</button>
+                <h5 (click)="ViewPerson(person.personID)" class="card-title">{{person.name}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{person.dates}}</h6>
+                <button type="button" class="btn btn-secondary m-2" (click)="EditPerson(person.personID)">Update</button>
+                <button type="button" class="btn btn-danger m-2" (click)="DeletePerson(person.personID)">Delete</button>
             </div>
         </div>
     </div>
